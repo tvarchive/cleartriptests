@@ -1,0 +1,24 @@
+Now lets add a second scenario to our test class.
+
+
+Given the user is on cleartrip home page
+When he searches with details for a return journey
+Then he should get both outbound and inbound journey options
+
+With these two scenarios we have quite a bit of common  setup steps between the two tests. Precisely things like:
+    Creating a driver instance
+    Launching the application under test
+    Closing the browser once the test is complete
+
+So for the common steps we create
+    a setup method for all common steps before both the tests
+    a teardown method to close the browsers once the tests are completed
+
+
+Notice the TestNG annotation @BeforeMethod and @AfterMethod on setup and teardown methods respectively.
+These annotations would make the setup and teardown methods to run before and after every test method in our scenario
+class.
+
+Suggested Reading: ??
+
+

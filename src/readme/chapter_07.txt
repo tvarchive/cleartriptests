@@ -1,0 +1,23 @@
+Moving from saying
+
+Select journey as one-way, enter origin as Bangalore, enter destination and Delhi, enter date as tomorrow
+and click search
+                            To
+Search for a one-way journey from Bangalore to Delhi for tomorrow.
+
+So basically, the business always talks of a journey in totality and things like origin, destination, dates etc are
+only different attributes of the journey.
+
+In other words, think of journey as a domain object.
+Let us create a class called JourneyDetails that encapsulates things like whether it's one-way, source, destination,
+travel dates etc. All these details are basically test data and the mechanism of using them on a page (like selecting,
+entering,clicking etc) doesn't need to be part of the scenario.
+
+So from  a business language perspective, the scenario is all about searching for a journey with some valid details and
+expecting a response for the same.
+
+We have replicated the same using the JourneyDetails class in here.
+
+Also notice the JourneyDetailsBuilder class, it is basically builiding the journey details object with some basic default
+data and overriding the same with any specific test data needs that we might have.
+

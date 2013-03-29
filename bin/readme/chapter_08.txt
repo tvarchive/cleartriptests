@@ -1,0 +1,15 @@
+Now while talking domain specific language, the next step is to move away from mentioning pages in the application
+to rather encapsulate the same with the actual users of the application,
+
+What i mean here is for the sake of readability and even in day to day business use the domain experts care more about
+who does what than how he does it?
+
+So kind of moving the mechanism of "how" from the test scenario language.
+
+For achieving the same we have created a specification layer, a class called AppUser and that user is the one who is doing
+all sort of stuff in the application.
+
+This is a very thin layer with hardly any logic of its own. It's just passing down stuff to the pages and helping build
+the specification to be used in the scenario.
+
+Also, look at how it manages navigation between pages.

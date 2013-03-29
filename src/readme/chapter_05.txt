@@ -1,0 +1,35 @@
+So lets create the page classes for scenarios that we have. The pages we have so far is
+    LandingPage. (This is the page where the user lands when he launches the application)
+    FlightSearchPage. (This is where the user enters flight details and then conduct a search)
+    SearchResultsPage. (This is where the user asserts if search results appear as expected)
+
+
+And all the methods that we had on the test scenario class  other than the actual test methods can be moved to one of
+the above page classes.
+
+The scenario would now use the services provided by these pages to complete a scenario.
+
+Read the test scenario again. It is now completely modeled on the pages of the application, a more readable
+representation of the test scenarios.
+
+Look at the page classes. All of them have the following in common:
+    A driver instance to do stuff on the page(enter,select,click etc)
+    Methods that collate our test steps.
+    Also, all the object identification(html id, xpath, linkname etc) at the moment is hard-coded into the methods.
+
+Keeping the hard-coded object identification may cause maintainance issues at a later point. Think of a scenario when an
+object id on the page is changed by a developer. That would need multiple changes on the pages for a hard-coded id.
+
+Ideally, the hard-coded id's should be abstracted at a page level and all the methods should refer to the objects by a
+much more recognizable name. This would help in
+    1. Improving readability
+    2. Maintainance ease because only the reference needs to change, the object names can still remain the same across
+     all methods.
+
+
+
+Also, look at the navigation between the pages. Every action on a page that would take the user to the a different
+page is wrapped into a separate method and returns the next page class as appropriate. Hence, giving us control of the
+application navigation.
+
+

@@ -1,0 +1,3 @@
+This is just a small refactoring to have only the test scenarios in the test class
+And moving everything else to a base class, so that we can create more test classes and all the methods like
+setup, teardown, given, when, then etc could be reused across multiple test scenario classes.

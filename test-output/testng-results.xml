@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="2" passed="2">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="22447" started-at="2013-03-29T08:30:07Z" finished-at="2013-03-29T08:30:29Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="22447" started-at="2013-03-29T08:30:07Z" finished-at="2013-03-29T08:30:29Z">
+      <class name="scenarios.Chapter_13_TipsnTricks">
+        <test-method status="PASS" signature="testDragnDropfunctionality()[pri:0, instance:scenarios.Chapter_13_TipsnTricks@2598c6f3]" name="testDragnDropfunctionality" duration-ms="7879" started-at="2013-03-29T14:00:07Z" finished-at="2013-03-29T14:00:15Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDragnDropfunctionality -->
+        <test-method status="PASS" signature="testFirefoxProfile()[pri:0, instance:scenarios.Chapter_13_TipsnTricks@2598c6f3]" name="testFirefoxProfile" duration-ms="14551" started-at="2013-03-29T14:00:15Z" finished-at="2013-03-29T14:00:29Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testFirefoxProfile -->
+      </class> <!-- scenarios.Chapter_13_TipsnTricks -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

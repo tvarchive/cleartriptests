@@ -1,0 +1,6 @@
+Though it does the job but the whole test in previous chapter is hardly readable by anybody outside.
+
+This chapter is just trying to improve the readability of the code to the next level. Pulling out smaller methods from
+the whole test in there.
+
+Suggested Reading: ??

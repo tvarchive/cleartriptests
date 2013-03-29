@@ -1,0 +1,27 @@
+Moving on, let us abstract the driver from the test scenarios.
+
+Principally, the scenario should just talk a business language and the browser driver(definition and instantiation) should be abstracted, so that
+    there is a central place for everyone to go fetch a driver instance as needed.
+    type for driver is abstracted to a common place and can be changed more easily if needed.
+
+
+So we will move the driver definition to a separate class (AppDriver) and also instantiate it there.
+So, moving forward any of the test scenario class that needs the driver would pick it up from the AppDriver class.
+
+
+Now look again at the test scenario class.
+    The scenarios can easily be modeled on the screens (pages) of the application. What we are precisely doing in these
+     scenarios is the following.
+        e.g. The user lands on the homepage of the website
+             And he clicks the flight link on the homepage
+             And then enter flight details on the flight search page
+             And then clicks on search button on the flight search page
+             Then he should see results of the search on search results pages.
+
+     If you now look at the methods other than the test methods they are actually page specific steps. And these steps
+     would obviously make sense to be abstracted because more than one test scenario would be going through all the pages
+     where these steps belong to.
+
+
+     So, in principle we should have pages defined in the framework. A page would collate all the steps that can be done
+     on that particular page. And hence, providing a service to any test scenario that needs to interact with the page.
