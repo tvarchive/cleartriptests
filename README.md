@@ -12,7 +12,7 @@ The Scenarios considered are mostly the day to day business use case where in we
 You need to have one of the IDE either Eclipse or IntelliJ. Once you are done with cloning the project , you need to import the project.
 Your preferred IDE might throw some error if path to JDK is not set properly.   
 
-Support: In case of any help needed, do write us at tosukesh@gmail.com or nishuverma@gmail.com
+Support: In case of any help needed, do write us at tosukeshk@gmail.com or nishuverma@gmail.com
 
 Feedback: We have also added an Issues tab where you can report issue or problem you are stuck with. 
 We are very much happy to get your feedbacks, even though it's a small typo or some improvement in documentation. 
