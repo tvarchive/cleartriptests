@@ -2,7 +2,6 @@ package scenarios;
 
 import domain.JourneyDetails;
 import domain.JourneyDetailsBuilder;
-import junit.framework.Assert;
 import org.testng.annotations.Test;
 import util.DateUtil;
 
@@ -21,5 +20,6 @@ public class Chapter_12_CaptureScreenShotIfTestFails extends BaseScenario {
         then(user).hasJourneyOptionsAvailableForTheReturnJourney();
 
     }
+
 
 }
