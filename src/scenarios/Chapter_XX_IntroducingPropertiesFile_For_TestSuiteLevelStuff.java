@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import util.DateUtil;
 
 
-public class Chapter_XX_IntroducePropertiesFile_For_TestSuiteLevelStuff extends BaseScenarioWithPropertyFileImplementation {
+public class Chapter_XX_IntroducingPropertiesFile_For_TestSuiteLevelStuff extends BaseScenarioWithPropertyFileImplementation {
 
 
     @Test

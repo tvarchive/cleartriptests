@@ -1,26 +1,21 @@
 package scenarios;
 
-import com.google.common.base.Function;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import util.WaitFor;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
-public class Chapter_04_AbstractTheDriver {
+public class Chapter_04_AbstractingTheDriver {
     // Use the application driver
     WebDriver driver;
 
@@ -125,23 +120,14 @@ public class Chapter_04_AbstractTheDriver {
 
 
     private void selectTheFirstAvailableAutoCompleteOption() {
-        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-                .withTimeout(30, TimeUnit.SECONDS)
-                .pollingEvery(1, TimeUnit.SECONDS)
-                .ignoring(NoSuchElementException.class);
-
-        WebElement optionListElement = wait.until(new Function<WebDriver, WebElement>() {
-            public WebElement apply(WebDriver driver) {
-                return driver.findElement(By.id("autocompleteOptionsContainer"));
-            }
-        });
+        //Conditional wait - wait for element to be present
+        WebElement autocompleteOptionsContainer = new WaitFor(driver).presenceOfTheElement(By.id("autocompleteOptionsContainer"));
 
         //select the first item from the auto complete list
-        WebElement originOptionsElement = optionListElement;
-        List<WebElement> originOptions = originOptionsElement.findElements(By.tagName("li"));
-        originOptions.get(0).click();
-    }
+        List<WebElement> optionsList = autocompleteOptionsContainer.findElements(By.tagName("li"));
+        optionsList.get(0).click();
 
+    }
 
     private boolean isElementPresent(By by) {
         try {
@@ -166,20 +152,8 @@ public class Chapter_04_AbstractTheDriver {
 
 
     public void waitForSearchResultsToAppear() {
-        Wait<WebDriver> wait = new WebDriverWait(driver, 30);
-        wait.until(visibilityOfElementLocated(By.id("mod_link")));
-    }
-
-    public ExpectedCondition<WebElement> visibilityOfElementLocated(final By locator) {
-        return new ExpectedCondition<WebElement>() {
-            public WebElement apply(WebDriver driver) {
-                WebElement toReturn = driver.findElement(locator);
-                if (toReturn.isDisplayed()) {
-                    return toReturn;
-                }
-                return null;
-            }
-        };
+        //Conditional wait for one of the elements on the search results page to be present
+        new WaitFor(driver).presenceOfTheElement(By.id("mod_link"));
     }
 
 

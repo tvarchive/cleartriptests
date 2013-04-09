@@ -1,21 +1,19 @@
 package scenarios;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageFactoryImpl.FlightsSearchPage;
-import pageFactoryImpl.LandingPage;
-import pageFactoryImpl.SearchResultsPage;
-
+import pages.FlightsSearchPage;
+import pages.LandingPage;
+import pages.SearchResultsPage;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
-public class Chapter_06_IntroducePageFactory_FieldLevelAbstractions {
+public class Chapter_05_IntroducingPageObjectModel {
 
     // Use the application driver
     WebDriver driver;
@@ -30,7 +28,7 @@ public class Chapter_06_IntroducePageFactory_FieldLevelAbstractions {
         //launch the application under test
         driver = new AppDriver().getDriver();
         driver.get("http://www.cleartrip.com/");
-        onLandingPage = PageFactory.initElements(driver, LandingPage.class);
+        onLandingPage = new LandingPage(driver);
         onFlightsSearchPage = onLandingPage.goToFlightsSearchPage();
 
     }

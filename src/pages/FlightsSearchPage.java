@@ -1,15 +1,11 @@
 package pages;
 
-import com.google.common.base.Function;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
+import util.WaitFor;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class FlightsSearchPage {
     WebDriver driver;
@@ -53,21 +49,13 @@ public class FlightsSearchPage {
 
 
     public void selectTheFirstAvailableAutoCompleteOption() {
-        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-                .withTimeout(30, TimeUnit.SECONDS)
-                .pollingEvery(1, TimeUnit.SECONDS)
-                .ignoring(NoSuchElementException.class);
-
-        WebElement optionListElement = wait.until(new Function<WebDriver, WebElement>() {
-            public WebElement apply(WebDriver driver) {
-                return driver.findElement(By.id("autocompleteOptionsContainer"));
-            }
-        });
+        //Conditional wait - wait for element to be present
+        WebElement autocompleteOptionsContainer = new WaitFor(driver).presenceOfTheElement(By.id("autocompleteOptionsContainer"));
 
         //select the first item from the auto complete list
-        WebElement originOptionsElement = optionListElement;
-        List<WebElement> originOptions = originOptionsElement.findElements(By.tagName("li"));
-        originOptions.get(0).click();
+        List<WebElement> optionsList = autocompleteOptionsContainer.findElements(By.tagName("li"));
+        optionsList.get(0).click();
+
     }
 
     public SearchResultsPage searchForTheJourney() {

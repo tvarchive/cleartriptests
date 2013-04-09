@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
-public class Chapter_07_IntroduceDomainDrivenLanguage {
+public class Chapter_07_IntroducingDomainDrivenLanguage {
 
     // Use the application driver
     WebDriver driver;
