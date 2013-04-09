@@ -1,28 +1,56 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bootstrap 101 Template</title>
+    <title>Test Framework Documentation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+     <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+
   </head>
   <body>
-    <h1>Hello, world!</h1>
+  	<div class="container">
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <div class="row">
-	  <div class="span4">Read This</div>
-	  <div class="span8">Code</div>
+    <div class="row-fluid">
+	  <div class="span6 offset 3"><h2>Read This</h2></div>
+	  <div class="span6 offset 3"><h2>Code</h2></div>
 	</div>
 	<div class="row">
 	  <div class="span4">
-	  	<p>
-	  		Some documneation in here followed by lines of code next to it
+	  	<p><pre>
+This is a pre-recorded test mostly generated through selenium IDE.And following is the scenario it covers:
+
+	Given the user is on cleartrip home page
+	When he searches with details for a one-way journey
+	Then he should get the outbound journey options
+
+The @Test annotation signifies that the the method under consideration is a test method and can be run using TestNG
+test framework.
+
+We have just recorded one small ticket search flow using the Selenium IDE and pasted the generated code in here.
+There is a Webdriver wait statement in the test that basically waits for the autocomplete options to appear when the
+user starts typing the origin or destination city name.
+
+Also notice the extra methods in the class. waitForSearchResultsToAppear().
+This has been added purposefully to ensure that the test waits for the result page to appear. While writing the test we
+noticed that the pageLoad on search button click was a little inconsistent and the test kept failing randomly. Hence,
+we have added this to ensure consistency of the page load.
+
+		</pre>
 	  	</p>	
 	  </div>
 	  <div class="span8">
-	  	<p> <code>
-	  		package scenarios;
+	  	<p> <pre><code>
+	  		
+package scenarios;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -127,9 +155,170 @@ public class Chapter_01_temp_TheFirstSeleniumTest {
 		return new SimpleDateFormat("dd/MM/yyyy").format(c.getTime());  
 	}
 }
-		</code>
+		</code></pre>
 	  	</p>	
 	  </div>
+
+	  <div class="row-fluid">
+	  	<div class="span6 offset 2">
+	  		<p><pre>
+Though it does the job but the whole test in previous chapter is hardly readable by anybody outside.
+
+This chapter is just trying to improve the readability of the code to the next level. Pulling out smaller methods from
+the whole test in there.
+
+	  		</pre></p>
+	  	</div>
+	  	<div class="span6 offset 2">
+	  		<code><pre>
+package scenarios;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+
+import com.google.common.base.Function;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class Chapter_02_MakeTheTestCodeReadable {
+
+	WebDriver driver = new FirefoxDriver();
+
+	@Test
+	public void testThatResultsAppearForAOneWayJourney(){
+
+		driver.get("http://www.cleartrip.com/");
+		chooseToHaveAOneWayJourney();
+		
+		enterOriginAs("Bangalore");
+		selectTheFirstAvailableAutoCompleteOption();
+		
+		enterDestinationAs("Delhi");
+		selectTheFirstAvailableAutoCompleteOption();
+		
+		enterDepartureDate();
+		
+		//all fields filled in. Now click on search
+		searchForTheJourney();
+        waitForSearchResultsToAppear();
+		
+		//verify that result appears for the provided journey search
+        Assert.assertTrue(isElementPresent(By.id("outbound")));
+		
+		//close the browser
+		driver.close();
+		
+	}
+
+
+    public String dayAfterTomorrow(){
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, 2);
+        return new SimpleDateFormat("dd/MM/yyyy").format(c.getTime());
+    }
+
+	private void searchForTheJourney() {
+		driver.findElement(By.id("button_flight_search")).click();
+
+
+	}
+
+    public void waitForSearchResultsToAppear() {
+        Wait<WebDriver> wait = new WebDriverWait(driver, 30);
+        wait.until(visibilityOfElementLocated(By.id("mod_link")));
+    }
+
+    public ExpectedCondition<WebElement> visibilityOfElementLocated(final By locator) {
+        return new ExpectedCondition<WebElement>() {
+            public WebElement apply(WebDriver driver) {
+                WebElement toReturn = driver.findElement(locator);
+                if (toReturn.isDisplayed()) {
+                    return toReturn;
+                }
+                return null;
+            }
+        };
+    }
+
+
+	private void enterDepartureDate() {
+		driver.findElement(By.id("dpt_date")).clear();
+		driver.findElement(By.id("dpt_date")).sendKeys(tomorrow());
+	}
+
+
+	private void enterDestinationAs(String destination) {
+		driver.findElement(By.id("destination_autocomplete")).clear();
+		driver.findElement(By.id("destination_autocomplete")).sendKeys(destination);
+	}
+
+
+	private void enterOriginAs(String origin) {
+		driver.findElement(By.id("origin_autocomplete")).clear();
+		driver.findElement(By.id("origin_autocomplete")).sendKeys(origin);
+	}
+
+
+	private void chooseToHaveAOneWayJourney() {
+		driver.findElement(By.id("one_way")).click();
+	}
+
+
+	private void selectTheFirstAvailableAutoCompleteOption() {
+		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+			       .withTimeout(30, TimeUnit.SECONDS)
+			       .pollingEvery(1, TimeUnit.SECONDS)
+			       .ignoring(NoSuchElementException.class);
+		
+		 WebElement optionListElement = wait.until(new Function<WebDriver, WebElement>() {
+		     public WebElement apply(WebDriver driver) {
+		       return driver.findElement(By.id("autocompleteOptionsContainer"));
+		     }
+		   });
+		
+		//select the first item from the auto complete list
+		WebElement originOptionsElement = optionListElement;
+		List<WebElement> originOptions = originOptionsElement.findElements(By.tagName("li"));
+		originOptions.get(0).click();
+	}
+
+
+	private boolean isElementPresent(By by) {
+		try {
+			driver.findElement(by);
+			return true;
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+	}
+
+	public String tomorrow(){
+		Calendar c = Calendar.getInstance();  
+		c.add(Calendar.DATE, 1);  
+		return new SimpleDateFormat("dd/MM/yyyy").format(c.getTime());  
+	}
+
+
+}
+
+	  		</pre></code>
+	  	</div>
+
+	  </div>
+	</div>
 	</div>
   </body>
 </html>
