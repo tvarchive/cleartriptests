@@ -1,18 +1,14 @@
 package scenarios;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
 
 
 public class Chapter_01_TheFirstSeleniumTest {
@@ -47,15 +43,14 @@ public class Chapter_01_TheFirstSeleniumTest {
         List<WebElement> destinationOptions = driver.findElement(By.id("ui-id-2")).findElements(By.tagName("li"));
         destinationOptions.get(0).click();
 
-        driver.findElement(By.id("DepartDate")).click();
-        driver.findElement(By.id("DepartDate")).sendKeys(Keys.ENTER);
+        driver.findElement(By.xpath("//*[@id='ui-datepicker-div']/div[1]/table/tbody/tr[3]/td[7]/a")).click();
 
         //all fields filled in. Now click on search
         driver.findElement(By.id("SearchBtn")).click();
 
         waitFor(5000);
         //verify that result appears for the provided journey search
-        Assert.assertTrue(isElementPresent(By.id("outbound")));
+        Assert.assertTrue(isElementPresent(By.className("searchSummary")));
 
         //close the browser
         driver.close();
@@ -80,9 +75,9 @@ public class Chapter_01_TheFirstSeleniumTest {
         }
     }
 
-    public String tomorrow(){
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.DATE, 1);
-        return new SimpleDateFormat("dd/MM/yyyy").format(c.getTime());
-    }
+//    public String tomorrow(){
+//        Calendar c = Calendar.getInstance();
+//        c.add(Calendar.DATE, 1);
+//        return new SimpleDateFormat("dd/MM/yyyy").format(c.getTime());
+//    }
 }
