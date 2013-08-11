@@ -15,6 +15,7 @@ import java.util.List;
 public class Chapter_02_MakingTheTestCodeReadable {
 
     WebDriver driver = new FirefoxDriver();
+    
 
     @Test
     public void testThatResultsAppearForAOneWayJourney() {
@@ -23,10 +24,10 @@ public class Chapter_02_MakingTheTestCodeReadable {
         chooseToHaveAOneWayJourney();
 
         enterOriginAs("Bangalore");
-        selectTheFirstAvailableAutoCompleteOption();
+        selectTheFirstAvailableAutoCompleteOptionForOrigin();
 
         enterDestinationAs("Delhi");
-        selectTheFirstAvailableAutoCompleteOption();
+        selectTheFirstAvailableAutoCompleteOptionForDestination();
 
         enterDepartureDate();
 
@@ -35,7 +36,7 @@ public class Chapter_02_MakingTheTestCodeReadable {
         waitForSearchResultsToAppear();
 
         //verify that result appears for the provided journey search
-        Assert.assertTrue(isElementPresent(By.id("outbound")));
+        Assert.assertTrue(isElementPresent(By.className("searchSummary")));
 
         //close the browser
         driver.close();
@@ -43,14 +44,23 @@ public class Chapter_02_MakingTheTestCodeReadable {
     }
 
 
-    public String dayAfterTomorrow() {
+    private void selectTheFirstAvailableAutoCompleteOptionForOrigin() {
+    	//select the first item from the auto complete list
+        waitFor(2000);
+        List<WebElement> optionsList = driver.findElement(By.id("ui-id-1")).findElements(By.tagName("li"));
+        optionsList.get(0).click();
+		
+	}
+
+
+	public String dayAfterTomorrow() {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE, 2);
         return new SimpleDateFormat("dd/MM/yyyy").format(c.getTime());
     }
 
     private void searchForTheJourney() {
-        driver.findElement(By.id("button_flight_search")).click();
+        driver.findElement(By.id("SearchBtn")).click();
 
 
     }
@@ -61,35 +71,37 @@ public class Chapter_02_MakingTheTestCodeReadable {
 
 
     private void enterDepartureDate() {
-        driver.findElement(By.id("dpt_date")).clear();
-        driver.findElement(By.id("dpt_date")).sendKeys(tomorrow());
+    	driver.findElement(By.xpath("//*[@id='ui-datepicker-div']/div[1]/table/tbody/tr[3]/td[7]/a")).click();
+
     }
 
 
     private void enterDestinationAs(String destination) {
-        driver.findElement(By.id("destination_autocomplete")).clear();
-        driver.findElement(By.id("destination_autocomplete")).sendKeys(destination);
+        driver.findElement(By.id("ToTag")).clear();
+        driver.findElement(By.id("ToTag")).sendKeys(destination);
     }
 
 
     private void enterOriginAs(String origin) {
-        driver.findElement(By.id("origin_autocomplete")).clear();
-        driver.findElement(By.id("origin_autocomplete")).sendKeys(origin);
+        driver.findElement(By.id("FromTag")).clear();
+        driver.findElement(By.id("FromTag")).sendKeys(origin);
     }
 
 
     private void chooseToHaveAOneWayJourney() {
-        driver.findElement(By.id("one_way")).click();
+        driver.findElement(By.id("OneWay")).click();
     }
 
 
-    private void selectTheFirstAvailableAutoCompleteOption() {
-
+    private void selectTheFirstAvailableAutoCompleteOptionForDestination() {
+    	
         //select the first item from the auto complete list
         waitFor(2000);
-        List<WebElement> optionsList = driver.findElement(By.id("autocompleteOptionsContainer")).findElements(By.tagName("li"));
+        List<WebElement> optionsList = driver.findElement(By.id("ui-id-2")).findElements(By.tagName("li"));
         optionsList.get(0).click();
     }
+    
+
 
     private void waitFor(int durationInMilliSeconds) {
         try {
