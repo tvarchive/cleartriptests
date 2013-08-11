@@ -1,10 +1,12 @@
 package scenarios;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -24,32 +26,32 @@ public class Chapter_01_TheFirstSeleniumTest {
     public void testThatResultsAppearForAOneWayJourney(){
 
         driver.get("http://www.cleartrip.com/");
-        driver.findElement(By.id("one_way")).click();
+        driver.findElement(By.id("OneWay")).click();
 
-        driver.findElement(By.id("origin_autocomplete")).clear();
-        driver.findElement(By.id("origin_autocomplete")).sendKeys("Bangalore");
+        driver.findElement(By.id("FromTag")).clear();
+        driver.findElement(By.id("FromTag")).sendKeys("Bangalore");
 
         //wait for the auto complete options to appear for the origin
 
         waitFor(2000);
-        List<WebElement> originOptions = driver.findElement(By.id("autocompleteOptionsContainer")).findElements(By.tagName("li"));
+        List<WebElement> originOptions = driver.findElement(By.id("ui-id-1")).findElements(By.tagName("li"));
         originOptions.get(0).click();
 
-        driver.findElement(By.id("destination_autocomplete")).clear();
-        driver.findElement(By.id("destination_autocomplete")).sendKeys("Delhi");
+        driver.findElement(By.id("ToTag")).clear();
+        driver.findElement(By.id("ToTag")).sendKeys("Delhi");
 
         //wait for the auto complete options to appear for the destination
 
         waitFor(2000);
         //select the first item from the destination auto complete list
-        List<WebElement> destinationOptions = driver.findElement(By.id("autocompleteOptionsContainer")).findElements(By.tagName("li"));
+        List<WebElement> destinationOptions = driver.findElement(By.id("ui-id-2")).findElements(By.tagName("li"));
         destinationOptions.get(0).click();
 
-        driver.findElement(By.id("dpt_date")).clear();
-        driver.findElement(By.id("dpt_date")).sendKeys(tomorrow());
+        driver.findElement(By.id("DepartDate")).click();
+        driver.findElement(By.id("DepartDate")).sendKeys(Keys.ENTER);
 
         //all fields filled in. Now click on search
-        driver.findElement(By.id("button_flight_search")).click();
+        driver.findElement(By.id("SearchBtn")).click();
 
         waitFor(5000);
         //verify that result appears for the provided journey search
