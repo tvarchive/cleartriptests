@@ -1,4 +1,4 @@
-Introduction: 
+**Introduction:** 
 
 Folks we have written a tutorial for aspiring test automation engineers who wants to master Webdriver and looking for Test Automation Framework creation knowledge. 
 The project contains bunch of chapters right from "writing your first Selenium test" to "how to implement Page Object Pattern". 
